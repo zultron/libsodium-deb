@@ -1,0 +1,19 @@
+Debian packaging for libsodium
+
+Modified materials produced by a script at [1].
+
+To build:
+
+  # Download libsodium
+  # (Alternatively, clone https://github.com/jedisct1/libsodium)
+  wget http://download.libsodium.org/libsodium/releases/libsodium-0.5.0.tar.gz \
+    -O libsodium_0.5.0.orig.tar.gz
+  # Unpack
+  tar xzf libsodium_0.5.0.orig.tar.gz
+  cd libsodium-0.5.0
+  # Clone this packaging
+  git clone https://github.com/zultron/libsodium-deb.git debian
+  # Build
+  debuild -us -uc
+
+[1] https://github.com/ulikoehler/deb-buildscripts/blob/master/deb-libsodium.sh

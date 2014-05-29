@@ -1,0 +1,5 @@
+libsodium (0.5.0-1) UNRELEASED; urgency=low
+
+  * Initial package
+
+ -- John Morris <john@zultron.com>  Thu, 29 May 2014 00:09:03 -0500

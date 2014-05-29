@@ -1,0 +1,11 @@
+#!/usr/bin/make -f
+%:
+	dh $@
+override_dh_auto_configure:
+	./configure --prefix=$(shell pwd)/debian/libsodium/usr
+override_dh_auto_build:
+	make
+override_dh_auto_install:
+	mkdir -p debian/libsodium/usr debian/libsodium-dev/usr
+	make install
+	mv debian/libsodium/usr/include debian/libsodium-dev/usr
