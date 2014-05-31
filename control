@@ -1,18 +1,17 @@
 Source: libsodium
-Maintainer: John Morris <john@zultron.com>
-Section: misc
+Section: devel
 Priority: optional
-Standards-Version: 3.9.2
-Build-Depends: debhelper (>= 8), devscripts, build-essential
+Maintainer: John Morris <john@zultron.com>
+Standards-Version: 3.9.3
+Build-Depends: debhelper (>= 8), autotools-dev, autoconf, automake, libtool
+Homepage: https://libsodium.org
 
 Package: libsodium
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Homepage: https://libsodium.org
 Description: libsodium
 
 Package: libsodium-dev
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, libsodium(= 0.5.0-1)
-Homepage: https://libsodium.org
+Depends: libsodium (= ${binary:Version}), ${misc:Depends}
 Description: libsodium development files

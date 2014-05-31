@@ -1,11 +1,82 @@
 #!/usr/bin/make -f
-%:
-	dh $@
-override_dh_auto_configure:
-	./configure --prefix=$(shell pwd)/debian/libsodium/usr
-override_dh_auto_build:
-	make
-override_dh_auto_install:
-	mkdir -p debian/libsodium/usr debian/libsodium-dev/usr
-	make install
-	mv debian/libsodium/usr/include debian/libsodium-dev/usr
+
+CONFIG_OPTS = --prefix=/usr \
+            --includedir=/usr/include \
+            --mandir=/usr/share/man
+
+build: build-arch build-indep
+
+build-arch: build-arch-stamp
+build-arch-stamp: config.status
+	dh_testdir
+	$(MAKE)
+	touch build-arch-stamp
+
+build-indep: build-indep-stamp
+build-indep-stamp: config.status
+	dh_testdir
+	touch build-indep-stamp
+
+config.status: configure-stamp
+configure-stamp:
+	dh_testdir
+	./autogen.sh
+	./configure $(CONFIG_OPTS)
+	touch configure-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f configure-stamp build-indep-stamp build-arch-stamp
+	-if test -f Makefile ; then \
+	    $(MAKE) distclean ; \
+	fi
+	dh_clean
+	rm -fR $(CURDIR)/tmp
+	-rm -f configure
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
+	dh_install --sourcedir=$(CURDIR)/debian/tmp
+
+# Build architecture-independent files here.
+binary-indep: build install
+	dh_testdir -i
+	dh_testroot -i
+	dh_link -i
+	dh_installchangelogs -i
+	dh_strip -i
+	dh_fixperms -i
+	dh_makeshlibs -i
+	dh_installdeb -i
+	dh_shlibdeps -i
+	dh_gencontrol -i
+	dh_md5sums -i
+	dh_builddeb -i
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir -s
+	dh_testroot -s
+	dh_installdocs -i -A AUTHORS ChangeLog LICENSE README THANKS \
+	    README.markdown
+	dh_link -s
+	dh_installchangelogs -s
+	dh_strip -s
+	dh_compress -s
+	dh_fixperms -s
+	dh_makeshlibs -s
+	dh_installdeb -s
+	dh_shlibdeps -s
+	dh_gencontrol -s
+	dh_md5sums -s
+	dh_builddeb -s
+
+# We have nothing to do by default.
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install
