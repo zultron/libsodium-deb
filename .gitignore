@@ -8,3 +8,9 @@
 /libsodium.postrm.debhelper
 /libsodium.substvars
 /libsodium/
+
+# OSC
+/.osc/
+/libsodium*.tar.gz
+/libsodium*.dsc
+/libsodium_*.debian.tar.gz
