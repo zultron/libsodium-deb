@@ -1,3 +1,10 @@
+libsodium (0.5.0-2) unstable; urgency=low
+
+  * Fix `-dev` package deps
+    - arch: any to arch: all
+
+ -- John Morris <john@zultron.com>  Mon, 02 Feb 2015 12:29:48 -0600
+
 libsodium (0.5.0-1) unstable; urgency=low
 
   * Updates for OBS

@@ -12,6 +12,6 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: libsodium
 
 Package: libsodium-dev
-Architecture: all
-Depends: libsodium (= ${binary:Version}), ${misc:Depends}
+Architecture: any
+Depends: libsodium (= ${source:Version}), ${misc:Depends}
 Description: libsodium development files
